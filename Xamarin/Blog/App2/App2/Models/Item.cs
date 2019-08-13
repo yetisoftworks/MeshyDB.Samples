@@ -1,8 +1,10 @@
-﻿using MeshyDB.SDK.Models;
+﻿using MeshyDB.SDK.Attributes;
+using MeshyDB.SDK.Models;
 using System;
 
 namespace App2.Models
 {
+    [MeshName("BlogPost")]
     public class Item : MeshData
     {
         public string Text { get; set; }

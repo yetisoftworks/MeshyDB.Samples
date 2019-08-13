@@ -12,6 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using MeshyDB.SDK.Enums;
 using System.Collections.Specialized;
+using MeshyDB.SDK.Models;
 
 namespace App2.ViewModels
 {
@@ -26,7 +27,7 @@ namespace App2.ViewModels
             Title = "Recent Posts";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            LoadMoreItemsCommand = new Command(async () => await ExecuteLoadMoreItemsCommand());
+            LoadMoreItemsCommand = new Command(async () => await ExecuteLoadItemsCommand(true));
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
@@ -86,43 +87,7 @@ namespace App2.ViewModels
             });
         }
 
-        async Task ExecuteLoadMoreItemsCommand()
-        {
-            if (IsBusy)
-                return;
-
-            try
-            {
-                var lastItem = Items[Items.Count - 1];
-
-                // todo: filtering by this isn't working
-                Expression<Func<Item, bool>> filter = (Item x) => x.DateCreated < lastItem.DateCreated;
-                //Expression<Func<Item, bool>> filter = (Item x) => true;
-
-                var sort = new List<KeyValuePair<string, SortDirection>>();
-                sort.Add(new KeyValuePair<string, SortDirection>(nameof(Item.DateCreated), SortDirection.Descending));
-
-                var items = await App.Connection.Meshes.SearchAsync(filter, sort, 1, 10);
-                if (items.TotalRecords > 0)
-                {
-                    foreach (var item in items.Results)
-                    {
-                        Items.Add(item);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-
-
-        async Task ExecuteLoadItemsCommand()
+        async Task ExecuteLoadItemsCommand(bool more = false)
         {
             if (IsBusy)
                 return;
@@ -131,11 +96,18 @@ namespace App2.ViewModels
 
             try
             {
-                Items.Clear();
                 Expression<Func<Item, bool>> filter = (Item x) => true;
+                if (more)
+                {
+                    var lastItem = Items[Items.Count - 1];
+                    filter = (Item x) => x.DateCreated < lastItem.DateCreated;
+                }
+                else
+                {
+                    Items.Clear();
+                }
 
-                var sort = new List<KeyValuePair<string, SortDirection>>();
-                sort.Add(new KeyValuePair<string, SortDirection>(nameof(Item.DateCreated), SortDirection.Descending));
+                var sort = SortDefinition<Item>.SortByDescending(x => x.DateCreated);
 
                 var items = await App.Connection.Meshes.SearchAsync(filter, sort, 1, 10);
                 if (items.TotalRecords > 0)

@@ -66,7 +66,6 @@ namespace App2
 
             InitializeMeshy();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 
