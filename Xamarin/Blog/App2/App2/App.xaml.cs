@@ -19,7 +19,7 @@ namespace App2
                 if (client == null)
                 {
                     var accountName = "gails";
-                    var publicKey = "6d7518affff94db88b42614b9c7778d6";
+                    var publicKey = "<INSERT PUBLIC KEY HERE>";
 
                     client = MeshyClient.Initialize(accountName, publicKey);
                 }
