@@ -28,13 +28,11 @@
                     <ViewCell>
                         <StackLayout Padding="10">
                             <Label Text="{Binding Text}" 
-                                d:Text="{Binding .}"
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
                                 FontSize="24" />
                             <Label Text="{Binding CreatedByName, StringFormat='by {0:N}'}" FontSize="8"/>
                             <Label Text="{Binding Description}" 
-                                d:Text="Item descripton"
                                 LineBreakMode="TailTruncation"
                                    MaxLines="3"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
