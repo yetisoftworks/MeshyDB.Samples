@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeshyForums.Android", "App2\App2.Android\MeshyForums.Android.csproj", "{894F5BB9-57E6-47B0-927F-EC83199FF3F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeshyForums.Android", "MeshyForums\MeshyForums.Android\MeshyForums.Android.csproj", "{894F5BB9-57E6-47B0-927F-EC83199FF3F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeshyForums.iOS", "App2\App2.iOS\MeshyForums.iOS.csproj", "{D1F40C49-CD5F-40EC-8DD9-F02D7E0364C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeshyForums.iOS", "MeshyForums\MeshyForums.iOS\MeshyForums.iOS.csproj", "{D1F40C49-CD5F-40EC-8DD9-F02D7E0364C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeshyForums", "App2\App2\MeshyForums.csproj", "{8EF8A423-BD6E-448C-B0BD-517A0EB9249E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeshyForums", "MeshyForums\MeshyForums\MeshyForums.csproj", "{8EF8A423-BD6E-448C-B0BD-517A0EB9249E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
