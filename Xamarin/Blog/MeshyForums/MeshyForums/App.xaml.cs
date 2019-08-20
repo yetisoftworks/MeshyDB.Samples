@@ -11,7 +11,7 @@ namespace MeshyForums
 {
     public partial class App : Application
     {
-        static IMeshyClient client;
+        public static IMeshyClient client;
         public static IMeshyClient Client
         {
             get
@@ -24,6 +24,19 @@ namespace MeshyForums
                     client = MeshyClient.Initialize(accountName, publicKey);
                 }
                 return client;
+            }
+        }
+
+        public static IMeshyConnection connection;
+        public static IMeshyConnection Connection
+        {
+            get
+            {
+                if (connection == null)
+                {
+                    connection = Client.LoginAnonymously(DeviceId.ToString());
+                }
+                return connection;
             }
         }
 
@@ -41,23 +54,13 @@ namespace MeshyForums
             }
         }
 
-        private async Task RegisterDeviceUser()
+        private void RegisterDeviceUser()
         {
-            var userExists = await Client.CheckUserExistAsync(DeviceId.ToString());
+            var userExists = Client.CheckUserExist(DeviceId.ToString());
             if (!userExists.Exists)
             {
-                await Client.RegisterAnonymousUserAsync(DeviceId.ToString());
+                Client.RegisterAnonymousUser(DeviceId.ToString());
             }
-        }
-
-        public static IMeshyConnection Connection;
-        public async Task<IMeshyConnection> EstablishConnection()
-        {
-            if (Connection == null)
-            {
-                Connection = await Client.LoginAnonymouslyAsync(DeviceId.ToString());
-            }
-            return Connection;
         }
 
         public App()
@@ -71,8 +74,7 @@ namespace MeshyForums
 
         private void InitializeMeshy()
         {
-            Task.Run(async () => await RegisterDeviceUser()).Wait();
-            Task.Run(async () => await EstablishConnection()).Wait();
+            RegisterDeviceUser();
         }
 
         protected override void OnStart()
