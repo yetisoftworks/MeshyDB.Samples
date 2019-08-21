@@ -31,20 +31,19 @@ namespace MeshyForums.ViewModels
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
-                var currentUser = App.Connection.CurrentUser;
                 var newItem = item as Item;
-                newItem.CreatedById = currentUser.Id;
+                newItem.CreatedById = App.Connection.CurrentUser.Id;
                 newItem.DateCreated = DateTimeOffset.Now;
 
-                var username = currentUser.Username;
-                var name = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
+                var username = App.Connection.CurrentUser.Username;
+                var name = $"{App.Connection.CurrentUser.FirstName} {App.Connection.CurrentUser.LastName}".Trim();
                 username = !string.IsNullOrWhiteSpace(name) ? name : username;
                 newItem.CreatedByName = username;
 
                 try
                 {
-                    await App.Connection.Meshes.CreateAsync<Item>(newItem);
-                    Items.Insert(0, newItem);
+                    var createResult = await App.Connection.Meshes.CreateAsync<Item>(newItem);
+                    Items.Insert(0, createResult);
                 }
                 catch (Exception)
                 {
@@ -68,18 +67,17 @@ namespace MeshyForums.ViewModels
 
             MessagingCenter.Subscribe<EditItemPage, Item>(this, "UpdateItem", async (obj, item) =>
             {
-                var currentUser = App.Connection.CurrentUser;
-                var username = currentUser.Username;
-                var name = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
+                var username = App.Connection.CurrentUser.Username;
+                var name = $"{App.Connection.CurrentUser.FirstName} {App.Connection.CurrentUser.LastName}".Trim();
                 username = !string.IsNullOrWhiteSpace(name) ? name : username;
                 item.CreatedByName = username;
 
                 try
                 {
-                    await App.Connection.Meshes.UpdateAsync<Item>(item.Id, item);
+                    var updateResult = await App.Connection.Meshes.UpdateAsync<Item>(item.Id, item);
 
-                    var post = Items.FirstOrDefault(x => x.Id == item.Id);
-                    post = item;
+                    var post = Items.FirstOrDefault(x => x.Id == updateResult.Id);
+                    post = updateResult;
                 }
                 catch (Exception)
                 {
