@@ -11,7 +11,7 @@ namespace MeshyForums
 {
     public partial class App : Application
     {
-        public static IMeshyClient client;
+        private static IMeshyClient client;
         public static IMeshyClient Client
         {
             get
@@ -27,7 +27,7 @@ namespace MeshyForums
             }
         }
 
-        public static IMeshyConnection connection;
+        private static IMeshyConnection connection;
         public static IMeshyConnection Connection
         {
             get

@@ -31,12 +31,13 @@ namespace MeshyForums.ViewModels
 
             MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
             {
+                var currentUser = App.Connection.CurrentUser;
                 var newItem = item as Item;
-                newItem.CreatedById = App.Connection.CurrentUser.Id;
+                newItem.CreatedById = currentUser.Id;
                 newItem.DateCreated = DateTimeOffset.Now;
 
-                var username = App.Connection.CurrentUser.Username;
-                var name = $"{App.Connection.CurrentUser.FirstName} {App.Connection.CurrentUser.LastName}".Trim();
+                var username = currentUser.Username;
+                var name = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
                 username = !string.IsNullOrWhiteSpace(name) ? name : username;
                 newItem.CreatedByName = username;
 
@@ -67,8 +68,9 @@ namespace MeshyForums.ViewModels
 
             MessagingCenter.Subscribe<EditItemPage, Item>(this, "UpdateItem", async (obj, item) =>
             {
-                var username = App.Connection.CurrentUser.Username;
-                var name = $"{App.Connection.CurrentUser.FirstName} {App.Connection.CurrentUser.LastName}".Trim();
+                var currentUser = App.Connection.CurrentUser;
+                var username = currentUser.Username;
+                var name = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
                 username = !string.IsNullOrWhiteSpace(name) ? name : username;
                 item.CreatedByName = username;
 
