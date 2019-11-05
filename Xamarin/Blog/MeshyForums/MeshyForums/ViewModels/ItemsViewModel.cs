@@ -107,7 +107,7 @@ namespace MeshyForums.ViewModels
                     Items.Clear();
                 }
 
-                var sort = SortDefinition<Item>.SortByDescending(x => x.DateCreated);
+                var sort = OrderByDefinition<Item>.OrderByDescending(x => x.DateCreated);
 
                 var items = await App.Connection.Meshes.SearchAsync(filter, sort, 1, 10);
                 if (items.TotalRecords > 0)
