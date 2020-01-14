@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@meshydb/sdk": "^1.4.2",
+    "@meshydb/sdk": "^1.5.1",
     "bootstrap": "^4.3.1",
     "http": "0.0.0",
     "http-headers": "^3.0.2",
